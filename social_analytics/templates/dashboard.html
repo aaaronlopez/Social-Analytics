@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body class="body-dashboard">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		    		<span class="sr-only">Toggle navigation</span>
+		    		<span class="icon-bar"></span>
+		    		<span class="icon-bar"></span>
+		    		<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Social Analytics</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse" >
+				<form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
+					{% csrf_token %}
+					<div class="form-group">
+		  				<input type="text" placeholder="Keyword" id="keyword" name="keyword" class="form-control">
+					</div>
+					<div class="form-group">
+		  				<input type="text" placeholder="Limit" id="limit" name="limit" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success">Query</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+	<div class="container dashboard-content">
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="dashboard-section">
+			    <h2>Statistics</h2>
+			  	<table class="table table-striped">
+			  		<tr>
+					    <td>Average:</td>
+					    <td>{{ average }}</td> 
+					  </tr>
+					  <tr>
+					    <td>Median:</td>
+					    <td>{{ median }}</td> 
+					  </tr>
+					  <tr>
+					    <td>Mode:</td>
+					    <td>{{ mode }}</td> 
+					  </tr>
+					  <tr>
+					    <td>Minimum:</td>
+					    <td>{{ min }}</td> 
+					  </tr>
+					  <tr>
+					    <td>Maximum:</td>
+					    <td>{{ max }}</td> 
+					  </tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="dashboard-section">
+			    <h2>Histogram</h2>
+			    <div id="chart_div" style="width: 500px; height: 277px;"></div>
+			  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="dashboard-section">
+			    <h2>Pie Chart</h2>
+			    <div id="piechart" style="width: 500px; height: 277px;"></div>
+			  </div>
+			</div>	
+			<div class="col-xs-6">
+				<div class="dashboard-section">
+			    <h2>Tweets</h2>
+			    <table id="table" data-sort-name="sentiment" data-sort-order="desc" data-pagination="true" data-height="300">
+		        <thead>
+		          <tr>
+		            <th data-field="screen_name" data-sortable="true">User</th>
+		            <th data-field="sentiment" data-sortable="true">Sentiment</th>
+		            <th data-field="text" data-sortable="true">Tweet</th> 
+		          </tr>
+		        </thead>
+			    </table>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+        //Google Visualization
+        google.load("visualization", "1", {packages:["corechart"]});
+
+        //Histogram
+        google.setOnLoadCallback(drawHistogram);
+        function drawHistogram() {
+            var data = google.visualization.arrayToDataTable({{ histogram_data|safe }});
+
+            var options = {
+                legend: { position: 'none' },
+                backgroundColor: 'transparent',
+                colors: ['#4AAAA5'],
+                hAxis: {title: 'Sentiment Value',
+                        titleTextStyle: { 
+                            // color: '#fff', 
+                            bold: true, 
+                            italic: false
+                        },
+                        // textStyle: { 
+                        //     color: '#fff' 
+                        // },
+                        // gridlines: { 
+                        //     color: '#fff' 
+                        // }
+                        // minValue: -1,
+                        // maxValue: 1
+                        },
+                vAxis: {title: 'Count',
+                        titleTextStyle: { 
+                            // color: '#fff', 
+                            bold: true, 
+                            italic: false
+                        },
+                        // textStyle: { 
+                        //     color: '#fff' 
+                        // },
+                        minValue: 0
+                        }
+            };
+
+            var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        //Pie Chart
+        google.setOnLoadCallback(drawPieChart);
+        function drawPieChart() {
+            var data = google.visualization.arrayToDataTable({{ pie_data| safe }});
+
+            var options = {
+                // legend: {
+                //     textStyle: { color: '#fff'}
+                // },
+                backgroundColor: 'transparent',
+                slices: {
+                    0: { color: '#79CCC8' },
+                    1: { color: '#A3D39C' },
+                    2: { color: '#E45E55'} 
+                }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+      }
+
+        //Bootstrap-Table
+        var data = {{ tweets|safe }};
+        for (var i = 0; i < data.length; i++){
+            data[i]["screen_name"] = '<a href="https://twitter.com/' + data[i]["screen_name"] + '" role="button" target="_blank">' + data[i]["screen_name"] + '</a>'; 
+            data[i]["text"] = data[i]["text"] + ' <a href="https://twitter.com/statuses/' + data[i]["tweet_id"] + '" role="button" target="_blank">View</a>';
+        }
+        $(function () {
+            $('#table').bootstrapTable({
+                data: data
+            });
+        });
+    </script>
+{% endblock %}
