@@ -11,7 +11,7 @@
 		    		<span class="icon-bar"></span>
 		    		<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Social Analytics</a>
+					<a class="navbar-brand" href="{% url 'social_analytics:index' %}">Social Analytics</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse" >
 				<form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
@@ -29,10 +29,15 @@
 	</nav>
 	<div class="container dashboard-content">
 		<div class="row">
+			<div class="dashboard-header">
+				<p>Showing results for the keyword "{{ keyword }}" in {{ limit }} <a href="https://twitter.com/" target="_blank">Tweets.</a></p>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-xs-6">
 				<div class="dashboard-section">
 			    <h2>Statistics</h2>
-			  	<table class="table table-striped">
+			  	<table class="table table-striped stats-table">
 			  		<tr>
 					    <td>Average:</td>
 					    <td>{{ average }}</td> 
@@ -46,12 +51,16 @@
 					    <td>{{ mode }}</td> 
 					  </tr>
 					  <tr>
+					    <td>Standard Deviation:</td>
+					    <td>{{ std }}</td> 
+					  </tr>
+					  <tr>
 					    <td>Minimum:</td>
-					    <td>{{ min }}</td> 
+					    <td>{{ min }} <a href="https://twitter.com/statuses/{{ min_tweet_id }}" target="_blank">View</a></td> 
 					  </tr>
 					  <tr>
 					    <td>Maximum:</td>
-					    <td>{{ max }}</td> 
+					    <td>{{ max }} <a href="https://twitter.com/statuses/{{ max_tweet_id }}" target="_blank">View</a></td> 
 					  </tr>
 					</table>
 				</div>
@@ -59,7 +68,7 @@
 			<div class="col-xs-6">
 				<div class="dashboard-section">
 			    <h2>Histogram</h2>
-			    <div id="chart_div" style="width: 500px; height: 277px;"></div>
+			    <div id="chart_div" class="histogram"></div>
 			  </div>
 			</div>
 		</div>
@@ -67,7 +76,7 @@
 			<div class="col-xs-6">
 				<div class="dashboard-section">
 			    <h2>Pie Chart</h2>
-			    <div id="piechart" style="width: 500px; height: 277px;"></div>
+			    <div id="piechart" class="pie-chart"></div>
 			  </div>
 			</div>	
 			<div class="col-xs-6">
@@ -108,28 +117,20 @@
                 colors: ['#4AAAA5'],
                 hAxis: {title: 'Sentiment Value',
                         titleTextStyle: { 
-                            // color: '#fff', 
+                            color: '#5E5E5E', 
                             bold: true, 
                             italic: false
                         },
-                        // textStyle: { 
-                        //     color: '#fff' 
-                        // },
-                        // gridlines: { 
-                        //     color: '#fff' 
-                        // }
-                        // minValue: -1,
-                        // maxValue: 1
+                        textStyle: { 
+                            color: '#5E5E5E' 
+                        }
                         },
                 vAxis: {title: 'Count',
                         titleTextStyle: { 
-                            // color: '#fff', 
+                            color: '#5E5E5E', 
                             bold: true, 
                             italic: false
                         },
-                        // textStyle: { 
-                        //     color: '#fff' 
-                        // },
                         minValue: 0
                         }
             };
@@ -141,17 +142,23 @@
         //Pie Chart
         google.setOnLoadCallback(drawPieChart);
         function drawPieChart() {
-            var data = google.visualization.arrayToDataTable({{ pie_data| safe }});
+            var data = google.visualization.arrayToDataTable({{ pie_chart|safe }});
 
             var options = {
-                // legend: {
-                //     textStyle: { color: '#fff'}
-                // },
+                legend: {
+                    textStyle: { color: '#5E5E5E'}
+                },
                 backgroundColor: 'transparent',
                 slices: {
                     0: { color: '#79CCC8' },
                     1: { color: '#A3D39C' },
                     2: { color: '#E45E55'} 
+                },
+                chartArea: {
+                    left: 0,
+                    top: 0,
+                    width: '100%',
+                    height: '100%'
                 }
             };
 
@@ -160,16 +167,12 @@
             chart.draw(data, options);
       }
 
-        //Bootstrap-Table
-        var data = {{ tweets|safe }};
-        for (var i = 0; i < data.length; i++){
-            data[i]["screen_name"] = '<a href="https://twitter.com/' + data[i]["screen_name"] + '" role="button" target="_blank">' + data[i]["screen_name"] + '</a>'; 
-            data[i]["text"] = data[i]["text"] + ' <a href="https://twitter.com/statuses/' + data[i]["tweet_id"] + '" role="button" target="_blank">View</a>';
-        }
-        $(function () {
-            $('#table').bootstrapTable({
-                data: data
-            });
-        });
+      //Bootstrap-Table
+      var data = {{ tweets|safe }};
+      $(function () {
+          $('#table').bootstrapTable({
+              data: data
+          });
+      });
     </script>
 {% endblock %}

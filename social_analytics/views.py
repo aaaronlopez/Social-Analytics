@@ -6,7 +6,7 @@ from tweepy.streaming import StreamListener
 from textblob import TextBlob
 from collections import Counter
 from scipy.stats import mode
-from numpy import median, average
+from numpy import median, average, std
 import json
 
 #Tweepy Authorization
@@ -23,11 +23,11 @@ def analyze_tweets(request):
 	tweet_limit = int(request.POST.get('limit'))
 
 	histogram_data = [['Sentiment']]
-	pie_data = [['Sentiment', 'Value'], 
+	pie_chart = [['Sentiment', 'Value'], 
 				['Neutral', 0],
 				['Positive', 0],
 				['Negative', 0]]
-	sentiments = {}
+	statistics = {}
 	tweets = []
 
 	class listener(StreamListener):
@@ -41,22 +41,32 @@ def analyze_tweets(request):
 				id = tweet['id']
 				text = tweet['text']
 				blob = TextBlob(text)
+				sentiment = blob.sentiment.polarity
+
+				#Histogram
 				histogram_data.append([blob.sentiment.polarity])
-				sentiments[id] = blob.sentiment.polarity
-				self.num_tweets += 1
+
+				#Statistics
+				statistics[id] = sentiment
+				
+				#Table
 				tweets.append({
-					'tweet_id':str(tweet['id']),
-					'time':tweet['timestamp_ms'], 
-					'screen_name':tweet['user']['screen_name'],
-					'sentiment':blob.sentiment.polarity,
-					'text':tweet['text'],
+					'screen_name': '<a href="https://twitter.com/' + tweet['user']['screen_name'] 
+									+ '"target="_blank">' + tweet['user']['screen_name'] + '</a>',
+					'sentiment': float("{0:.2f}".format(sentiment)),
+					'text': text + ' <a href="https://twitter.com/statuses/' + 
+									str(tweet['id']) + '"target="_blank">View</a>'
 					})
-				if blob.sentiment.polarity == 0:
-					pie_data[1][1] += 1
-				elif blob.sentiment.polarity > 0:
-					pie_data[2][1] += 1
-				elif blob.sentiment.polarity < 0:
-					pie_data[3][1] += 1
+
+				#Piechart
+				if sentiment == 0:
+					pie_chart[1][1] += 1
+				elif sentiment > 0:
+					pie_chart[2][1] += 1
+				elif sentiment < 0:
+					pie_chart[3][1] += 1
+
+				self.num_tweets += 1
 				return True		
 			else:
 				return False
@@ -64,24 +74,25 @@ def analyze_tweets(request):
 		def on_error(self, status):
 			print status
 
+	#Call Twitter Stream
 	twitterStream = Stream(auth, listener())
 	twitterStream.filter(track=[keyword], languages=["en"])
 
-	data = {}
-	data['keyword'] = keyword
-	data['limit'] = tweet_limit
-	data['histogram_data'] = histogram_data
-	data['pie_data'] = pie_data
-	data['tweets'] = json.dumps(tweets)
-	data['average'] = average(sentiments.values())
-	data['median'] = median(sentiments.values())
-	data['mode'] = mode(sentiments.values())[0][0]
-	data['min'] = min(sentiments.values())
-	data['max'] = max(sentiments.values())
-	data['min_tweet_id'] = min(sentiments, key=sentiments.get)
-	data['max_tweet_id'] = max(sentiments, key=sentiments.get)
-
-	# import pdb; pdb.set_trace()
-
+	#Context Data
+	data = {
+		'keyword': keyword,
+		'limit': tweet_limit,
+		'histogram_data': histogram_data,
+		'pie_chart': pie_chart,
+		'tweets': json.dumps(tweets),
+		'average': float("{0:.5f}".format(average(statistics.values()))),
+		'median': float("{0:.5f}".format(median(statistics.values()))),
+		'mode': mode(statistics.values())[0][0],
+		'std': float("{0:.5f}".format(std(statistics.values()))),
+		'min': float("{0:.5f}".format(min(statistics.values()))),
+		'max': float("{0:.5f}".format(max(statistics.values()))),
+		'min_tweet_id': min(statistics, key=statistics.get),
+		'max_tweet_id': max(statistics, key=statistics.get),
+	}
 	return render(request, 'dashboard.html', data)
 

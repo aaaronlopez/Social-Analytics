@@ -26,10 +26,10 @@
         <h3>Mode:</h3>
             <p>{{ mode }}</p>
         <h3>Min:</h3>
-            <p>{{ min }}</p>
+            <p>{{ min }}  </p>
             <a class="btn btn-default" href="https://twitter.com/statuses/{{ min_tweet_id }}" role="button" target="_blank">View Tweet</a>
         <h3>Max:</h3>
-            <p>{{ max }}</p>
+            <p>{{ max }}  </p>
             <a class="btn btn-default" href="https://twitter.com/statuses/{{ max_tweet_id }}" role="button" target="_blank">View Tweet</a>
 </div>
 <div class="row">
@@ -112,6 +112,10 @@
                     0: { color: '#FFCC00' },
                     1: { color: 'green' },
                     2: { color: 'red'} 
+                },
+                chartArea: {
+                    backgroundColor: 'black',
+                    left: 0
                 }
             };
 

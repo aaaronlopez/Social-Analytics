@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="jumbotron vertical-center">
-	<div class="container text-center">
-		<h1>Social Analytics</h1>
-		<form id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
-			{% csrf_token %}
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3">
-						<input type="text" placeholder="Keyword" class="form-control front-form" id="keyword" name="keyword" required>
+<body class="body-front">
+	<div class="jumbotron vertical-center">
+		<div class="container text-center">
+			<h1>Social Analytics</h1>
+			<form id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
+				{% csrf_token %}
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<input type="text" placeholder="Keyword" class="form-control front-form" id="keyword" name="keyword" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<input type="text" placeholder="Limit" class="form-control front-form" id="limit" name="limit" required>
+						</div>
+					</div>
+					<div class="row">
+						<input type="submit" class="btn btn-lg btn-success front-form" value="Query">
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3">
-						<input type="text" placeholder="Limit" class="form-control front-form" id="limit" name="limit" required>
-					</div>
-				</div>
-				<div class="row">
-					<input type="submit" class="btn btn-lg btn-success front-form" value="Query">
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>
+</body>
 {% endblock %}
