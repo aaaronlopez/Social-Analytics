@@ -17,7 +17,7 @@
 				<form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
 					{% csrf_token %}
 					<div class="form-group">
-		  				<input type="text" placeholder="Keyword" id="keyword" name="keyword" class="form-control">
+		  				<input type="text" placeholder="Keyword/Username" id="keyword" name="keyword" class="form-control">
 					</div>
 					<div class="form-group">
 		  				<input type="text" placeholder="Limit" id="limit" name="limit" class="form-control">
@@ -29,8 +29,8 @@
 	</nav>
 	<div class="container dashboard-content">
 		<div class="row">
-			<div class="dashboard-header">
-				<p>Showing results for the keyword "{{ keyword }}" in {{ limit }} <a href="https://twitter.com/" target="_blank">Tweets.</a></p>
+			<div class="dashboard-header text-center">
+				<h4>Showing results for the keyword <strong>"{{ keyword }}"</strong> in {{ limit }} <a href="https://twitter.com/" target="_blank">Tweets.</a></h4>
 			</div>
 		</div>
 		<div class="row">
@@ -47,20 +47,16 @@
 					    <td>{{ median }}</td> 
 					  </tr>
 					  <tr>
-					    <td>Mode:</td>
-					    <td>{{ mode }}</td> 
-					  </tr>
-					  <tr>
 					    <td>Standard Deviation:</td>
 					    <td>{{ std }}</td> 
 					  </tr>
 					  <tr>
 					    <td>Minimum:</td>
-					    <td>{{ min }} <a href="https://twitter.com/statuses/{{ min_tweet_id }}" target="_blank">View</a></td> 
+					    <td>{{ min }}  <a href="https://twitter.com/statuses/{{ min_tweet_id }}" target="_blank">View</a></td> 
 					  </tr>
 					  <tr>
 					    <td>Maximum:</td>
-					    <td>{{ max }} <a href="https://twitter.com/statuses/{{ max_tweet_id }}" target="_blank">View</a></td> 
+					    <td>{{ max }}  <a href="https://twitter.com/statuses/{{ max_tweet_id }}" target="_blank">View</a></td> 
 					  </tr>
 					</table>
 				</div>

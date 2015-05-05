@@ -5,7 +5,7 @@ from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
 from textblob import TextBlob
 from collections import Counter
-from scipy.stats import mode
+# from scipy.stats import mode
 from numpy import median, average, std
 import json
 
@@ -19,6 +19,14 @@ def index(request):
     return render(request, 'front.html', data)
 
 def analyze_tweets(request):
+	selection = request.POST.get('key-selector')
+	import pdb; pdb.set_trace()
+	if selection == "by Keyword":
+		return tweets_by_key(request)
+	elif selection == "by User":
+		return tweets_by_user(request)
+
+def tweets_by_key(request):
 	keyword = request.POST.get('keyword')
 	tweet_limit = int(request.POST.get('limit'))
 
@@ -29,14 +37,15 @@ def analyze_tweets(request):
 				['Negative', 0]]
 	statistics = {}
 	tweets = []
+	tweet_count = 0
 
 	class listener(StreamListener):
 		def __init__(self, api=None):
 			super(listener, self).__init__()
-			self.num_tweets = 0
+			self.num_tweets = 1
 
 		def on_data(self, data):
-			if self.num_tweets < tweet_limit:
+			if self.num_tweets <= tweet_limit:
 				tweet = json.loads(data)
 				id = tweet['id']
 				text = tweet['text']
@@ -65,8 +74,8 @@ def analyze_tweets(request):
 					pie_chart[2][1] += 1
 				elif sentiment < 0:
 					pie_chart[3][1] += 1
-
 				self.num_tweets += 1
+				tweet_count += 1
 				return True		
 			else:
 				return False
@@ -87,7 +96,6 @@ def analyze_tweets(request):
 		'tweets': json.dumps(tweets),
 		'average': float("{0:.5f}".format(average(statistics.values()))),
 		'median': float("{0:.5f}".format(median(statistics.values()))),
-		'mode': mode(statistics.values())[0][0],
 		'std': float("{0:.5f}".format(std(statistics.values()))),
 		'min': float("{0:.5f}".format(min(statistics.values()))),
 		'max': float("{0:.5f}".format(max(statistics.values()))),

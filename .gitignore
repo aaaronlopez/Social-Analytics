@@ -4,6 +4,7 @@ config.yml
 *.swp
 .DS_Store
 db.sqlite3
+twitter.py
 
 #ignore sublime project
 *.sublime-project
