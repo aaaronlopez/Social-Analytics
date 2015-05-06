@@ -2,31 +2,35 @@
 
 {% block content %}
 <body class="body-dashboard">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-		    		<span class="sr-only">Toggle navigation</span>
-		    		<span class="icon-bar"></span>
-		    		<span class="icon-bar"></span>
-		    		<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{% url 'social_analytics:index' %}">Social Analytics</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse" >
-				<form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
-					{% csrf_token %}
-					<div class="form-group">
-		  				<input type="text" placeholder="Keyword/Username" id="keyword" name="keyword" class="form-control">
-					</div>
-					<div class="form-group">
-		  				<input type="text" placeholder="Limit" id="limit" name="limit" class="form-control">
-					</div>
-					<button type="submit" class="btn btn-success">Query</button>
-				</form>
-			</div>
-		</div>
-	</nav>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'social_analytics:index' %}">Social Analytics</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse" >
+        <form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
+          {% csrf_token %}
+          <div class="form-group">
+              <input type="text" placeholder="Keyword/Username" id="key" name="key" class="form-control">
+          </div>
+          <select class="form-control" id="key-selector" name="key-selector">
+            <option>by Keyword</option>
+            <option>by User</option>
+          </select>
+          <div class="form-group">
+            <input type="text" placeholder="Limit" id="limit" name="limit" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-success">Query</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 	<div class="container dashboard-content">
 		<div class="row">
 			<div class="dashboard-header text-center">

@@ -1,5 +1,4 @@
 config.yml
-*.yml
 *.un~
 *.swp
 .DS_Store

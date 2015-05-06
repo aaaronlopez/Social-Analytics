@@ -9,8 +9,8 @@
 				{% csrf_token %}
 				<div class="form-group">
 					<div class="row">
-						<div class="col-md-6 col-md-offset-2">
-							<input type="text" placeholder="Keyword/Username" class="form-control front-form" id="keyword" name="keyword" required>
+						<div class="col-md-4 col-md-offset-4">
+							<input type="text" placeholder="Keyword/Username" class="form-control front-form" id="key" name="key" required>
 						</div>
             <div class="col-md-2">
               <select class="form-control" id="key-selector" name="key-selector">
@@ -20,20 +20,16 @@
             </div>
 					</div>
 					<div class="row">
-						<div class="col-md-6 col-md-offset-2">
+						<div class="col-md-4 col-md-offset-4">
 							<input type="text" placeholder="Limit" class="form-control front-form" id="limit" name="limit" required>
 						</div>
-            <div class="col-md-2">
-              <select class="form-control" id="limit-selector" name="limit-selector">
-                <option>Limited</option>
-              </select>
-            </div>
 					</div>
 					<div class="row">
 						<input type="submit" class="btn btn-lg btn-success front-form" value="Query">
-            <a data-toggle="popover" class="help-popover" title="Help" data-content="Search for a keyword through Twitter to evaluate the sentiments of tweets! Simply fill in the Keyword with the word you'd like to search for and Limit with the number of tweets you'd like to search through."><span class="glyphicon glyphicon-question-sign"></span></a>
-            
 					</div>
+          <div class="row">
+            <a data-toggle="popover" class="help-popover" title="Help" data-content="Search for a keyword through Twitter to evaluate the sentiments of tweets! Simply fill in the Keyword with the word you'd like to search for and Limit with the number of tweets you'd like to search through."><span class="glyphicon glyphicon-question-sign"></span></a>
+          </div>
 				</div>
 			</form>
 		</div>

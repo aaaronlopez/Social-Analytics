@@ -75,6 +75,16 @@ h1 {
   font-size: 20px;
 }
 
+/*.dashboard-header h4 a {
+  color: #D83D3D;
+  font-size: 20px;
+}*/
+
+.dashboard-user {
+  color: #D83D3D;
+  font-size: 20px;
+}
+
 .dashboard-section {
   height: 350px;
   width: 500px;
