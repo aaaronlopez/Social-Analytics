@@ -33,13 +33,13 @@ A Django application that:
 Aaron Lopez, UC Berkeley
 
 ## Acknowledgements
-* [Django](https://www.djangoproject.com/)
-* [Heroku](https://www.heroku.com/)
-* [Twitter](https://twitter.com/)
-* [Tweepy](https://github.com/tweepy/tweepy)
-* [TextBlob](http://textblob.readthedocs.org/en/dev/)
-* [Bootstrap](http://getbootstrap.com/)
-* [Google Charts](https://developers.google.com/chart/)
-* [Bootstrap-Table](https://github.com/wenzhixin/bootstrap-table)
-* [Virtualenv](https://virtualenv.pypa.io/en/latest/)
+* [Django](https://www.djangoproject.com/) for maybe webapps easy!
+* [Heroku](https://www.heroku.com/) for a simple deploy!
+* [Twitter](https://twitter.com/) for the data!
+* [Tweepy](https://github.com/tweepy/tweepy) for a seamless way to connect to Twitter!
+* [TextBlob](http://textblob.readthedocs.org/en/dev/) for a quick way to analyze words!
+* [Bootstrap](http://getbootstrap.com/) for a simple framework to make beautiful websites!
+* [Google Charts](https://developers.google.com/chart/) for the gorgeous charts!
+* [Bootstrap-Table](https://github.com/wenzhixin/bootstrap-table) for the neat tables!
+* [Virtualenv](https://virtualenv.pypa.io/en/latest/) for the safety of my environment!
 
