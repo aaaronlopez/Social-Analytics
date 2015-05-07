@@ -16,7 +16,7 @@ A Django application that:
 4. Go to [config-example.yml](https://github.com/aaaronlopez/Social-Analytics/blob/master/config-example.yml) and change `secret_key`, `consumer_key`, `consumer_secret`, `access_token`, `access_token_secret`. Rename this to config.yml.
 	* `secret_key` can be any random 50 character string, use: `django.utils.crypto.get_random_string(50, chars)`
 	* You can also just change the secret key variables at the top of [local.py](https://github.com/aaaronlopez/Social-Analytics/blob/master/project/settings/local.py) if you don't want to use a .yml.
-6. Run `python manage.py runserver` from the base of this repo. (this will not work unless you do the above steps)
+6. Run `python manage.py runserver` from the base of this repo. (it will not work without the keys and tokens)
 
 ## How it Works
 * Uses [Django](https://www.djangoproject.com/) to run on the web.
