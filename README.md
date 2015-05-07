@@ -33,7 +33,7 @@ A Django application that:
 Aaron Lopez, UC Berkeley
 
 ## Acknowledgements
-* [Django](https://www.djangoproject.com/) for maybe webapps easy!
+* [Django](https://www.djangoproject.com/) for making webapps easy!
 * [Heroku](https://www.heroku.com/) for a simple deploy!
 * [Twitter](https://twitter.com/) for the data!
 * [Tweepy](https://github.com/tweepy/tweepy) for a seamless way to connect to Twitter!
