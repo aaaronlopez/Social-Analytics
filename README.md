@@ -21,6 +21,7 @@ A Django application that:
 ## How it Works
 * Uses [Django](https://www.djangoproject.com/) to run on the web.
 * Connects to the [Twitter](https://twitter.com/) API using the power of [Tweepy](https://github.com/tweepy/tweepy)!
+* Uses [TextBlob](http://textblob.readthedocs.org/en/dev/) to measure the sentiment of the tweets.
 * Sends the data from [Tweepy](https://github.com/tweepy/tweepy) to a rich dashboard that utilizes awesome [Bootstrap](http://getbootstrap.com/), [Google Charts](https://developers.google.com/chart/), and more!
 
 ## To-Do
@@ -36,6 +37,7 @@ Aaron Lopez, UC Berkeley
 * [Heroku](https://www.heroku.com/)
 * [Twitter](https://twitter.com/)
 * [Tweepy](https://github.com/tweepy/tweepy)
+* [TextBlob](http://textblob.readthedocs.org/en/dev/)
 * [Bootstrap](http://getbootstrap.com/)
 * [Google Charts](https://developers.google.com/chart/)
 * [Bootstrap-Table](https://github.com/wenzhixin/bootstrap-table)
