@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_rq',
     'social_analytics',
 )
 
@@ -85,6 +86,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+RQ_QUEUES = {
+     'default': {
+     'HOST': 'localhost',
+     'PORT': 6379,
+     'DB': 8,
+     },
 }
 
 # Internationalization

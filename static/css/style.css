@@ -4,6 +4,10 @@ body {
   color: #5E5E5E;
 }
 
+h1 {
+  color: #FFFFFF;
+}
+
 .body-front {
   background-color: #D83D3D;
 }
@@ -12,6 +16,20 @@ body {
   background-color: #D7DBDC;
   padding-top: 50px;
   padding-bottom: 20px;
+}
+
+.body-front .glyphicon {
+  font-size: 30px;
+  color: #FFFFFF;
+  vertical-align: middle;
+}
+
+.popover-title {
+  color: #000000;
+}
+
+.popover-content {
+  color: #5E5E5E;
 }
 
 .jumbotron.vertical-center {
@@ -45,17 +63,24 @@ body {
           justify-content : center;
 }
 
-h1 {
-  color: #FFFFFF;
-}
+.front-form {
+  margin: 4px;
+} 
 
 .navbar {
   background-color: #35404F;
 }
 
-.front-form {
-  margin: 4px;
-} 
+.navbar .navbar-brand {
+  color: #FFFFFF;
+  font-size: 24px;
+}
+
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+  color: #D83D3D;
+  font-size: 24px;
+}
 
 .dashboard-content {
   background-color: #D7DBDC;
@@ -75,19 +100,14 @@ h1 {
   font-size: 20px;
 }
 
-/*.dashboard-header h4 a {
-  color: #D83D3D;
-  font-size: 20px;
-}*/
-
 .dashboard-user {
   color: #D83D3D;
   font-size: 20px;
 }
 
 .dashboard-section {
-  height: 350px;
-  width: 500px;
+  height: 400px;
+  width: 575px;
   background-color: #F7F7F7;
   border-radius: 4px;
   border-style: solid;
@@ -96,8 +116,8 @@ h1 {
   box-shadow: 2px 2px 5px #888888;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
   padding: 10px;
 }
 
@@ -108,39 +128,16 @@ h1 {
 }
 
 .stats-table {
-  margin-top: 35px;
-}
-
-.pie-chart {
-  width: 500px; 
-  height: 277px; 
-  margin-left: 50px;
+  margin-top: 55px;
 }
 
 .histogram {
-  width: 500px; 
-  height: 277px;
+  width: 575px; 
+  height: 325px;
 }
 
-.navbar .navbar-brand {
-  color: #FFFFFF;
-  font-size: 24px;
-}
-.navbar .navbar-brand:hover,
-.navbar .navbar-brand:focus {
-  color: #D83D3D;
-  font-size: 24px;
-}
-
-.glyphicon {
-  font-size: 30px;
-  color: #FFFFFF;
-  vertical-align: middle;
-}
-
-.popover-title {
-  color: #000000;
-}
-.popover-content {
-  color: #5E5E5E;
+.pie-chart {
+  width: 575px; 
+  height: 325px; 
+  margin-left: 50px;
 }

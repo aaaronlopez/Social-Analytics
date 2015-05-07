@@ -17,3 +17,5 @@ textblob==0.9.0
 tweepy==3.3.0
 wsgiref==0.1.2
 psycopg2==2.5.1
+rq==0.5.2
+django-rq==0.8.0

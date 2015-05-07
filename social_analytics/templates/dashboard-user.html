@@ -81,12 +81,16 @@
 			</div>	
 			<div class="col-xs-6">
 				<div class="dashboard-section">
-			    <h2>Tweets</h2>
-			    <table id="table" data-sort-name="sentiment" data-sort-order="desc" data-pagination="true" data-height="300">
+          <div id="custom-toolbar">
+            <h2>Tweets</h2>
+          </div>
+			    <table id="table" data-title="Tweets" data-sort-name="sentiment" data-sort-order="desc" data-show-columns="true" data-mobile-responsive="true" data-toolbar="#custom-toolbar" data-search="true" data-height="375">
 		        <thead>
 		          <tr>
 		            <th data-field="sentiment" data-sortable="true">Sentiment</th>
-		            <th data-field="text" data-sortable="true">Tweet</th> 
+		            <th data-field="favorite_count" data-sortable="true">Favorites</th>
+		            <th data-field="retweet_count" data-sortable="true">Retweets</th>
+		            <th data-field="text" data-sortable="true">Tweet</th>
 		          </tr>
 		        </thead>
 			    </table>
