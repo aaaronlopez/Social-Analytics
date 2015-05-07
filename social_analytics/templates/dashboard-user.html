@@ -2,102 +2,104 @@
 
 {% block content %}
 <body class="body-dashboard">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-		    		<span class="sr-only">Toggle navigation</span>
-		    		<span class="icon-bar"></span>
-		    		<span class="icon-bar"></span>
-		    		<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{% url 'social_analytics:index' %}">Social Analytics</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse" >
-				<form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
-					{% csrf_token %}
-					<div class="form-group">
-		  				<input type="text" placeholder="Keyword/Username" id="key" name="key" class="form-control">
-					</div>
-					<select class="form-control" id="key-selector" name="key-selector">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'social_analytics:index' %}">Social Analytics</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse" >
+        <form class="navbar-form navbar-right" id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
+          {% csrf_token %}
+          <div class="form-group">
+              <input type="text" placeholder="Keyword/Username" id="key" name="key" class="form-control">
+          </div>
+          <select class="form-control" id="key-selector" name="key-selector">
             <option>by Keyword</option>
             <option>by User</option>
           </select>
-					<div class="form-group">
-	  				<input type="text" placeholder="Limit" id="limit" name="limit" class="form-control">
-					</div>
-					<button type="submit" class="btn btn-success">Query</button>
-				</form>
-			</div>
-		</div>
-	</nav>
-	<div class="container dashboard-content">
-		<div class="row">
-			<div class="dashboard-header text-center">
-				<h4>Showing results for {{ limit }} tweets from <a class=".dashboard-user" href="https://twitter.com/{{ user }}"target="_blank">{{ user }}</a>.</h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="dashboard-section">
-			    <h2>Statistics</h2>
-			  	<table class="table table-striped stats-table">
-			  		<tr>
-					    <td>Average:</td>
-					    <td>{{ average }}</td> 
-					  </tr>
-					  <tr>
-					    <td>Median:</td>
-					    <td>{{ median }}</td> 
-					  </tr>
-					  <tr>
-					    <td>Standard Deviation:</td>
-					    <td>{{ std }}</td> 
-					  </tr>
-					  <tr>
-					    <td>Minimum:</td>
-					    <td>{{ min }}  <a href="https://twitter.com/statuses/{{ min_tweet_id }}" target="_blank">View</a></td> 
-					  </tr>
-					  <tr>
-					    <td>Maximum:</td>
-					    <td>{{ max }}  <a href="https://twitter.com/statuses/{{ max_tweet_id }}" target="_blank">View</a></td> 
-					  </tr>
-					</table>
-				</div>
-			</div>
-			<div class="col-xs-6">
-				<div class="dashboard-section">
-			    <h2>Histogram</h2>
-			    <div id="chart_div" class="histogram"></div>
-			  </div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="dashboard-section">
-			    <h2>Pie Chart</h2>
-			    <div id="piechart" class="pie-chart"></div>
-			  </div>
-			</div>	
-			<div class="col-xs-6">
-				<div class="dashboard-section">
+          <div class="form-group">
+            <input type="text" placeholder="Limit" id="limit" name="limit" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-success">Query</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container dashboard-content">
+    <div class="row">
+      <div class="dashboard-header text-center">
+        <h4>Showing results for {{ limit }} tweets from <a class=".dashboard-user" href="https://twitter.com/{{ user }}"target="_blank">{{ user }}</a>.</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="dashboard-section">
+          <h2>Statistics</h2>
+          <table class="table table-striped stats-table">
+            <tr>
+              <td>Average:</td>
+              <td>{{ average }}</td> 
+            </tr>
+            <tr>
+              <td>Median:</td>
+              <td>{{ median }}</td> 
+            </tr>
+            <tr>
+              <td>Standard Deviation:</td>
+              <td>{{ std }}</td> 
+            </tr>
+            <tr>
+              <td>Minimum:</td>
+              <td>{{ min }}  <a href="https://twitter.com/statuses/{{ min_tweet_id }}" target="_blank">View</a></td> 
+            </tr>
+            <tr>
+              <td>Maximum:</td>
+              <td>{{ max }}  <a href="https://twitter.com/statuses/{{ max_tweet_id }}" target="_blank">View</a></td> 
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="dashboard-section">
+          <h2>Histogram</h2>
+          <div id="chart_div" class="histogram"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="dashboard-section">
+          <h2>Pie Chart</h2>
+          <div id="piechart" class="pie-chart"></div>
+        </div>
+      </div>  
+      <div class="col-xs-6">
+        <div class="dashboard-section">
           <div id="custom-toolbar">
             <h2>Tweets</h2>
           </div>
-			    <table id="table" data-title="Tweets" data-sort-name="sentiment" data-sort-order="desc" data-show-columns="true" data-mobile-responsive="true" data-toolbar="#custom-toolbar" data-search="true" data-height="375">
-		        <thead>
-		          <tr>
-		            <th data-field="sentiment" data-sortable="true">Sentiment</th>
-		            <th data-field="favorite_count" data-sortable="true">Favorites</th>
-		            <th data-field="retweet_count" data-sortable="true">Retweets</th>
-		            <th data-field="text" data-sortable="true">Tweet</th>
-		          </tr>
-		        </thead>
-			    </table>
-			  </div>
-			</div>
-		</div>
-	</div>
+          <table id="table" data-title="Tweets" data-sort-name="sentiment" data-sort-order="desc" data-show-columns="true" data-mobile-responsive="true" data-toolbar="#custom-toolbar" data-search="true" data-height="375">
+            <thead>
+              <tr>
+                <th data-field="sentiment" data-sortable="true">Sentiment</th>
+                <th data-field="favorite_count" data-sortable="true">Favorites</th>
+                <th data-field="retweet_count" data-sortable="true">Retweets</th>
+                <th data-field="text" data-sortable="true">Tweet</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 {% endblock %}
 

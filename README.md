@@ -7,7 +7,7 @@ A Django application that:
 ## Usage
 ### On Heroku
 * https://protected-earth-8489.herokuapp.com/
-* WARNING: Heroku limits web requests to 30 seconds. Since usually searches with >100 tweets take more than 30 seconds, try to keep the number of tweets you search through <100. However, everything should definitely work on a local server.
+* WARNING: Heroku limits web requests to 30 seconds. Since usually searches with >100 tweets take more than 30 seconds, try to keep the number of tweets you search through <100. However, everything should definitely work on a local server. A solution is in the works.
 
 ### Run Locally
 1. Clone this repository.

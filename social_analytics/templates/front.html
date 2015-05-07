@@ -2,44 +2,86 @@
 
 {% block content %}
 <body class="body-front">
-	<div class="jumbotron vertical-center">
-		<div class="container text-center">
-			<h1>Social Analytics</h1>
-			<form id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
-				{% csrf_token %}
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-4 col-md-offset-4">
-							<input type="text" placeholder="Keyword/Username" class="form-control front-form" id="key" name="key" required>
-						</div>
+  <div class="jumbotron vertical-center">
+    <div class="container text-center">
+      <h1>Social Analytics</h1>
+      <form id="analyze_tweets" method="POST" action={% url 'social_analytics:analyze-tweets' %}>
+        {% csrf_token %}
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <input type="text" placeholder="Keyword/Username" class="form-control front-form" id="key" name="key" required>
+            </div>
             <div class="col-md-2">
               <select class="form-control" id="key-selector" name="key-selector">
                 <option>by Keyword</option>
                 <option>by User</option>
               </select>
             </div>
-					</div>
-					<div class="row">
-						<div class="col-md-4 col-md-offset-4">
-							<input type="text" placeholder="Limit" class="form-control front-form" id="limit" name="limit" required>
-						</div>
-					</div>
-					<div class="row">
-						<input type="submit" class="btn btn-lg btn-success front-form" value="Query">
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <input type="text" placeholder="Limit" class="form-control front-form" id="limit" name="limit" required>
+            </div>
+          </div>
+          <div class="row">
+            <input type="submit" class="btn btn-lg btn-success front-form" value="Query">
             <a data-toggle="popover" class="help-popover" title="Help" data-content="Search for a keyword through Twitter to evaluate the sentiments of tweets! Simply fill in the Keyword/Username with the word or username you'd like to search for and Limit with the number of tweets you'd like to search through."><span class="glyphicon glyphicon-question-sign"></span></a>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="username-error" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>There is an error with the provided Twitter username. Please use a valid one.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="keyword-error" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>There is an error with your keyword query. Try another one.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 {% endblock %}
 
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
+  if ({{ username_error|safe }} === true) {
+    $('#username-error').modal('show')
+  }
+
+  if ({{ keyword_error|safe }} === true) {
+    $('#keyword-error').modal('show')
+  }
+
   $(document).ready(function(){
-      $('[data-toggle="popover"]').popover({trigger: "hover"}); 
+    $('[data-toggle="popover"]').popover({trigger: "hover"}); 
   });
 </script>
 {% endblock %}
