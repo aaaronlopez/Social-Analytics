@@ -7,6 +7,7 @@ A Django application that:
 ## Usage
 ### On Heroku
 * https://protected-earth-8489.herokuapp.com/
+* WARNING: Heroku limits web requests to 30 seconds. Since usually searches with >100 tweets take more than 30 seconds, try to keep the number of tweets you search through <100. However, everything should definitely work on a local server.
 
 ### Run Locally
 1. Clone this repository.
@@ -23,6 +24,7 @@ A Django application that:
 * Sends the data from [Tweepy](https://github.com/tweepy/tweepy) to a rich dashboard that utilizes awesome [Bootstrap](http://getbootstrap.com/), [Google Charts](https://developers.google.com/chart/), and more!
 
 ## To-Do
+* Use RQ worker to handle large tweet searches!
 * Add the ability to search through more social media!
 * Add more visually stimulating data representation!
 
